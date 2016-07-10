@@ -15,29 +15,68 @@ var TEST_ENTRY_DATA = [
   {
     user: {
       profile_image_url: 'https://facebook.github.io/react/img/logo_og.png',
-      id: 'takanabe'
+      id: 'fukuda1'
     },
-    title: 'React Native Test!!'
+    title: 'React Native Test1!!'
+  },
+  {
+    user: {
+      profile_image_url: 'https://facebook.github.io/react/img/logo_og.png',
+      id: 'fukuda2'
+    },
+    title: 'React Native Test2!!'
   }
 ];
-var entry = TEST_ENTRY_DATA[0];
+var entries = TEST_ENTRY_DATA;
 
 var EntryList = React.createClass({
-  render: function() {
+  getInitialState: function() {
+    return(
+      {
+        dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+      }
+    );
+  },
+  componentDidMount: function(){
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(entries)
+    });
+  },
+  renderEntry: function(entry){
     return (
-      <View style={styles.container}>
-      <Image source={{ uri: entry.user.profile_image_url }}
-        style={styles.thumbnail} />
-        <View style={styles.rightContainer}>
-          <Text style={styles.title}>{entry.title}</Text>
-          <Text style={styles.name}>{entry.user.id}</Text>
+      <TouchableHighlight>
+        <View>
+          <View style={styles.container}>
+            <Image source={{uri: entry.user.profile_image_url}} style={styles.thumbnail}/>
+            <View style={styles.rightContainer}>
+              <Text style={styles.title}>{entry.title}</Text>
+              <Text style={styles.name}>{entry.user.id}</Text>
+            </View>
+          </View>
+          <View style={styles.separator}/>
         </View>
-      </View>
+      </TouchableHighlight>
+    );
+  },
+  render: function() {
+    return(
+      <ListView
+        style={styles.listView}
+        dataSource={this.state.dataSource}
+        renderRow={this.renderEntry}
+      />
     );
   }
 });
 
 var styles = StyleSheet.create({
+    separator: {
+           height: 1,
+           backgroundColor: '#DDDDDD'
+    },
+    listView: {
+           backgroundColor: '#F5FCFF'
+    },
     container: {
         flex: 1,
         flexDirection: 'row',

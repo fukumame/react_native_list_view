@@ -1,33 +1,32 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+'use strict';
 
-import { React,  Component } from 'react';
-import { FeaturedTab } from './FeaturedTab.js'
-import { SearchTab } from './SearchTab.js'
-import {
+var React = require('react');
+var ReactNative = require('react-native');
+var FeaturedTab = require('./FeaturedTab.js');
+var SearchTab = require('./SearchTab.js');
+
+var {
   AppRegistry,
   StyleSheet,
   Text,
   View,
   TabBarIOS
-} from 'react-native';
+} = ReactNative;
 
-class Qiita_Reader extends Component {
-
-  constructor(props){
-    super(props);
-    this.state = {selectedTab: 'FeaturedTab'};
-  }
-
-  render() {
+var Qiita_Reader = React.createClass({
+  getInitialState: function(){
+    return(
+      {
+        selectedTab: 'FeaturedTab'
+      }
+    );
+  },
+  render: function() {
     return (
       <TabBarIOS selectedTab={this.state.selectedTab}>
         <TabBarIOS.Item
           selected={this.state.selectedTab === 'FeaturedTab'}
-          icon={{uri: 'featured'}}
+          systemIcon='featured'
           onPress={() => {
             this.setState(
               {selectedTab: 'FeaturedTab'}
@@ -38,7 +37,7 @@ class Qiita_Reader extends Component {
         </TabBarIOS.Item>
         <TabBarIOS.Item
           selected={this.state.selectedTab === 'SearchTab'}
-          icon={{uri: 'search'}}
+          systemIcon='search'
           onPress={() => {
             this.setState(
               {selectedTab: 'SearchTab'}
@@ -50,9 +49,9 @@ class Qiita_Reader extends Component {
       </TabBarIOS>
     );
   }
-}
+});
 
-const styles = StyleSheet.create({
+var styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',

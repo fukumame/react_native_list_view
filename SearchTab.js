@@ -1,22 +1,25 @@
-import { React,  Component } from 'react';
+'use strict';
 
-import {
+var React = require('react');
+var ReactNative = require('react-native');
+
+var {
   StyleSheet,
   Text,
   View,
-} from 'react-native';
+} = ReactNative;
 
-class SearchTab extends Component {
-  render(){
+var SearchTab = React.createClass({
+  render: function() {
     return (
       <View style={styles.container}>
         <Text style={styles.description}>This is SearchTab !!</Text>
       </View>
     );
   }
-}
+});
 
-const styles = StyleSheet.create({
+var styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',

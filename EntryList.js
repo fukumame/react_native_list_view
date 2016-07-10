@@ -8,8 +8,9 @@ var {
   View,
   Image,
   ListView,
+  ScrollView,
   TouchableHighlight,
-  ActivityIndicatorIOS
+  ActivityIndicator
 } = ReactNative;
 
 var QIITA_REACTJS_ENTRY_URL = "https://qiita.com/api/v2/tags/reactjs/items";
@@ -21,7 +22,8 @@ var EntryList = React.createClass({
     .then((response) => response.json())
     .then((responseData) => {
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(responseData),
+        // dataSource: this.state.dataSource.cloneWithRows(responseData),
+        dataSource: responseData,
         isLoaded: true
       });
     })
@@ -30,7 +32,7 @@ var EntryList = React.createClass({
   getInitialState: function() {
     return(
       {
-        dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
+        dataSource: [],
         isLoaded: false
       }
     );
@@ -38,9 +40,17 @@ var EntryList = React.createClass({
   componentDidMount: function(){
     this.fetchData();
   },
-  renderEntry: function(entry){
+  renderEntries: function(entries){
+    var entriesSize = entries.length
+    var outputs = [];
+    for(var i=0; i<entriesSize; i++) {
+      outputs.push(this.renderEntry(entries[i], i));
+    }
+    return outputs;
+  },
+  renderEntry: function(entry, index){
     return (
-      <TouchableHighlight>
+      <TouchableHighlight key={index}>
         <View>
           <View style={styles.container}>
             <Image source={{uri: entry.user.profile_image_url}} style={styles.thumbnail}/>
@@ -57,7 +67,7 @@ var EntryList = React.createClass({
   viewLoadingData: function(){
     return (
       <View style={styles.activityIndicator}>
-        <ActivityIndicatorIOS />
+        <ActivityIndicator />
         <View>
            <Text style={styles.loadingMessage}>Pleae wait a second ...</Text>
         </View>
@@ -67,11 +77,9 @@ var EntryList = React.createClass({
   render: function() {
     if(this.state.isLoaded){
       return(
-        <ListView
-          style={styles.listView}
-          dataSource={this.state.dataSource}
-          renderRow={this.renderEntry}
-        />
+        <ScrollView style={styles.listView} >
+          {this.renderEntries(this.state.dataSource)}
+        </ScrollView>
       );
     } else {
       return(

@@ -2,19 +2,24 @@
 
 var React = require('react');
 var ReactNative = require('react-native');
+var SearchEntry = require('./SearchEntry.js');
 
 var {
   StyleSheet,
   Text,
   View,
+  NavigatorIOS
 } = ReactNative;
 
 var SearchTab = React.createClass({
   render: function() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.description}>This is SearchTab !!</Text>
-      </View>
+      <NavigatorIOS
+        style={styles.container}
+        initialRoute={{
+          title: 'Search Entlies',
+          component: SearchEntry
+        }} />
     );
   }
 });
@@ -22,12 +27,6 @@ var SearchTab = React.createClass({
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  description: {
-    fontSize: 15,
-    backgroundColor: '#FFFFFF'
   }
 });
 

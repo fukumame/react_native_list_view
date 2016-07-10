@@ -8,39 +8,35 @@ var {
   View,
   Image,
   ListView,
-  TouchableHighlight
+  TouchableHighlight,
+  ActivityIndicatorIOS
 } = ReactNative;
 
-var TEST_ENTRY_DATA = [
-  {
-    user: {
-      profile_image_url: 'https://facebook.github.io/react/img/logo_og.png',
-      id: 'fukuda1'
-    },
-    title: 'React Native Test1!!'
-  },
-  {
-    user: {
-      profile_image_url: 'https://facebook.github.io/react/img/logo_og.png',
-      id: 'fukuda2'
-    },
-    title: 'React Native Test2!!'
-  }
-];
-var entries = TEST_ENTRY_DATA;
+var QIITA_REACTJS_ENTRY_URL = "https://qiita.com/api/v2/tags/reactjs/items";
 
 var EntryList = React.createClass({
+
+  fetchData: function() {
+    fetch(QIITA_REACTJS_ENTRY_URL)
+    .then((response) => response.json())
+    .then((responseData) => {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(responseData),
+        isLoaded: true
+      });
+    })
+    .done();
+  },
   getInitialState: function() {
     return(
       {
-        dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+        dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
+        isLoaded: false
       }
     );
   },
   componentDidMount: function(){
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(entries)
-    });
+    this.fetchData();
   },
   renderEntry: function(entry){
     return (
@@ -58,48 +54,75 @@ var EntryList = React.createClass({
       </TouchableHighlight>
     );
   },
+  viewLoadingData: function(){
+    return (
+      <View style={styles.activityIndicator}>
+        <ActivityIndicatorIOS />
+        <View>
+           <Text style={styles.loadingMessage}>Pleae wait a second ...</Text>
+        </View>
+      </View>
+    )
+  },
   render: function() {
-    return(
-      <ListView
-        style={styles.listView}
-        dataSource={this.state.dataSource}
-        renderRow={this.renderEntry}
-      />
-    );
+    if(this.state.isLoaded){
+      return(
+        <ListView
+          style={styles.listView}
+          dataSource={this.state.dataSource}
+          renderRow={this.renderEntry}
+        />
+      );
+    } else {
+      return(
+        this.viewLoadingData()
+      );
+    }
   }
 });
 
 var styles = StyleSheet.create({
-    separator: {
-           height: 1,
-           backgroundColor: '#DDDDDD'
-    },
-    listView: {
-           backgroundColor: '#F5FCFF'
-    },
-    container: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-        padding: 10
-    },
-    thumbnail: {
-        width: 100,
-        height: 100,
-        marginRight: 10
-    },
-    rightContainer: {
-        flex: 1
-    },
-    title: {
-        fontSize: 20,
-        marginBottom: 8
-    },
-    name: {
-        color: '#656565'
-    }
+  separator: {
+         height: 1,
+         backgroundColor: '#DDDDDD'
+  },
+  listView: {
+         backgroundColor: '#F5FCFF'
+  },
+  container: {
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#F5FCFF',
+      padding: 10
+  },
+  thumbnail: {
+      width: 100,
+      height: 100,
+      marginRight: 10
+  },
+  rightContainer: {
+      flex: 1
+  },
+  title: {
+      fontSize: 20,
+      marginBottom: 8
+  },
+  name: {
+      color: '#656565'
+  },
+  activityIndicator: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingMessage: {
+    flex: 1,
+    fontSize: 20,
+    color: '#656565',
+  }
 });
 
 module.exports = EntryList;

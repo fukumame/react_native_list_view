@@ -2,6 +2,7 @@
 
 var React = require('react');
 var ReactNative = require('react-native');
+var EntryDetail = require('./EntryDetail.js');
 var {
   StyleSheet,
   Text,
@@ -17,7 +18,7 @@ var QIITA_REACTJS_ENTRY_URL = "https://qiita.com/api/v2/tags/reactjs/items";
 
 var EntryList = React.createClass({
 
-  fetchData: function() {
+  _fetchData: function() {
     fetch(QIITA_REACTJS_ENTRY_URL)
     .then((response) => response.json())
     .then((responseData) => {
@@ -38,19 +39,19 @@ var EntryList = React.createClass({
     );
   },
   componentDidMount: function(){
-    this.fetchData();
+    this._fetchData();
   },
-  renderEntries: function(entries){
+  _renderEntries: function(entries){
     var entriesSize = entries.length
     var outputs = [];
     for(var i=0; i<entriesSize; i++) {
-      outputs.push(this.renderEntry(entries[i], i));
+      outputs.push(this._renderEntry(entries[i], i));
     }
     return outputs;
   },
-  renderEntry: function(entry, index){
+  _renderEntry: function(entry, index){
     return (
-      <TouchableHighlight key={index}>
+      <TouchableHighlight key={index} onPress={() => this._onPressed(entry)}>
         <View>
           <View style={styles.container}>
             <Image source={{uri: entry.user.profile_image_url}} style={styles.thumbnail}/>
@@ -64,7 +65,14 @@ var EntryList = React.createClass({
       </TouchableHighlight>
     );
   },
-  viewLoadingData: function(){
+  _onPressed: function(entry) {
+  this.props.navigator.push({
+    title: entry.title,
+    component: EntryDetail,
+    passProps: { url: entry.url }
+  })
+  },
+  _viewLoadingData: function(){
     return (
       <View style={styles.activityIndicator}>
         <ActivityIndicator />
@@ -78,12 +86,12 @@ var EntryList = React.createClass({
     if(this.state.isLoaded){
       return(
         <ScrollView style={styles.listView} >
-          {this.renderEntries(this.state.dataSource)}
+          {this._renderEntries(this.state.dataSource)}
         </ScrollView>
       );
     } else {
       return(
-        this.viewLoadingData()
+        this._viewLoadingData()
       );
     }
   }

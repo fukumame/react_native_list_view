@@ -1,0 +1,9 @@
+{
+  "name": "qiita-global-styles",
+  "version": "1.0.1",
+  "description": "Qiita Global Styles",
+  "main" : "qiita-global-styles",
+  "private": true,
+  "author": "fukumame",
+  "license": "MIT"
+}

@@ -2,23 +2,21 @@
 
 var React = require('react');
 var ReactNative = require('react-native');
-var EntryList = require('./EntryList.js');
+var EntryListView = require('./EntryListView.js');
 
 var {
   StyleSheet,
-  Text,
-  View,
   NavigatorIOS
 } = ReactNative;
 
-var FeaturedTab = React.createClass({
+var EntryListTab = React.createClass({
   render: function() {
     return (
       <NavigatorIOS
         style={styles.container}
         initialRoute={{
-          title: 'Featured Entlies',
-          component: EntryList
+          title: 'Qiita記事一覧',
+          component: EntryListView
         }} />
     );
   }
@@ -30,4 +28,4 @@ var styles = StyleSheet.create({
   }
 });
 
-module.exports = FeaturedTab;
+module.exports = EntryListTab;

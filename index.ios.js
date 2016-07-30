@@ -2,7 +2,7 @@
 
 var React = require('react');
 var ReactNative = require('react-native');
-var FeaturedTab = require('./FeaturedTab.js');
+var EntryListTab = require('./components/entry_list/EntryListTab.js');
 var SearchTab = require('./SearchTab.js');
 
 var {
@@ -17,7 +17,7 @@ var Qiita_Reader = React.createClass({
   getInitialState: function(){
     return(
       {
-        selectedTab: 'FeaturedTab'
+        selectedTab: 'EntryListTab'
       }
     );
   },
@@ -25,15 +25,15 @@ var Qiita_Reader = React.createClass({
     return (
       <TabBarIOS>
         <TabBarIOS.Item
-          selected={this.state.selectedTab === 'FeaturedTab'}
+          selected={this.state.selectedTab === 'EntryListTab'}
           systemIcon='featured'
           onPress={() => {
             this.setState(
-              {selectedTab: 'FeaturedTab'}
+              {selectedTab: 'EntryListTab'}
             );
           }}
         >
-          <FeaturedTab />
+          <EntryListTab />
         </TabBarIOS.Item>
         <TabBarIOS.Item
           selected={this.state.selectedTab === 'SearchTab'}

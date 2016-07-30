@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "react": "15.2.1",
-    "react-native": "0.29.0"
+    "react-native": "0.29.0",
+    "qiita-global-styles": "file:local-modules/qiita-global-styles"
   }
 }

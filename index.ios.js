@@ -23,7 +23,7 @@ var Qiita_Reader = React.createClass({
   },
   render: function() {
     return (
-      <TabBarIOS selectedTab={this.state.selectedTab}>
+      <TabBarIOS>
         <TabBarIOS.Item
           selected={this.state.selectedTab === 'FeaturedTab'}
           systemIcon='featured'

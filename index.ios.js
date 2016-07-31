@@ -1,27 +1,21 @@
-'use strict';
-
-var React = require('react');
-var ReactNative = require('react-native');
-var EntryListTab = require('./components/entry_list/EntryListTab.js');
-var SearchTab = require('./SearchTab.js');
-
-var {
+import React, { Component } from 'react';
+import ReactNative from 'react-native';
+import EntryListTab from './components/entry_list/EntryListTab.js';
+import SearchTab from './SearchTab.js'
+import {
   AppRegistry,
   StyleSheet,
   Text,
   View,
   TabBarIOS
-} = ReactNative;
+} from 'react-native';
 
-var Qiita_Reader = React.createClass({
-  getInitialState: function(){
-    return(
-      {
-        selectedTab: 'EntryListTab'
-      }
-    );
-  },
-  render: function() {
+class Qiita_Reader extends Component {
+  constructor(props){
+    super();
+    this.state = {selectedTab: 'EntryListTab'};
+  }
+  render(){
     return (
       <TabBarIOS>
         <TabBarIOS.Item
@@ -49,9 +43,9 @@ var Qiita_Reader = React.createClass({
       </TabBarIOS>
     );
   }
-});
+}
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',

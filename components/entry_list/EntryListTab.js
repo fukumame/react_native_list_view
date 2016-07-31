@@ -1,16 +1,13 @@
-'use strict';
-
-var React = require('react');
-var ReactNative = require('react-native');
-var EntryListView = require('./EntryListView.js');
-
-var {
+import React, { Component } from 'react';
+import ReactNative from 'react-native';
+import EntryListView from './EntryListView.js';
+import {
   StyleSheet,
   NavigatorIOS
-} = ReactNative;
+} from 'react-native';
 
-var EntryListTab = React.createClass({
-  render: function() {
+class EntryListTab extends Component{
+  render() {
     return (
       <NavigatorIOS
         style={styles.container}
@@ -20,12 +17,12 @@ var EntryListTab = React.createClass({
         }} />
     );
   }
-});
+}
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1
   }
 });
 
-module.exports = EntryListTab;
+export default EntryListTab;

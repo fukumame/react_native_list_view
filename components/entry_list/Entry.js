@@ -1,25 +1,24 @@
-'use strict';
-var React = require('react');
-var ReactNative = require('react-native');
-var EntryDetail = require('./EntryDetail.js');
-var globalStyles = require('qiita-global-styles');
-var {
+import React, { Component } from 'react';
+import ReactNative from 'react-native';
+import EntryDetail from './EntryDetail.js';
+import globalStyles from 'qiita-global-styles';
+import {
   Text,
   View,
   Image,
   TouchableHighlight
-} = ReactNative;
+} from 'react-native';
 
-var Entry = React.createClass ({
-  _onPressed: function() {
+class Entry extends Component {
+  _onPressed() {
     var entryData = this.props.entryData;
     this.props.navigator.push({
       title: entryData.title,
       component: EntryDetail,
       passProps: { url: entryData.url }
     });
-  },
-  render: function() {
+  }
+  render() {
     var index = this.props.index;
     var entryData = this.props.entryData;
     return(
@@ -37,6 +36,6 @@ var Entry = React.createClass ({
       </TouchableHighlight>
     );
   }
-});
+}
 
-module.exports = Entry;
+export default Entry;

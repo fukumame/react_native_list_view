@@ -1,19 +1,17 @@
-'use strict';
-
-var React = require('react');
-var ReactNative = require('react-native');
-var {
+import React, { Component } from 'react';
+import ReactNative from 'react-native';
+import {
     WebView
-} = ReactNative;
+} from 'react-native';
 
-var EntryDetail = React.createClass({
-  render: function(){
+class EntryDetail extends Component {
+  render(){
     return(
       <WebView
         source={{uri: this.props.url}}
       />
     );
   }
-});
+};
 
-module.exports = EntryDetail;
+export default EntryDetail;

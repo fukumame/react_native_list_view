@@ -1,15 +1,13 @@
-'use strict';
-var React = require('react');
-var ReactNative = require('react-native');
-var Entry = require('./Entry.js');
-var globalStyles = require('qiita-global-styles');
-var {
+import React, { Component } from 'react';
+import ReactNative from 'react-native';
+import Entry from './Entry.js';
+import globalStyles from 'qiita-global-styles';
+import {
   ScrollView
-} = ReactNative;
+} from 'react-native';
 
-
-var Entries = React.createClass({
-  render: function(){
+class Entries extends Component {
+  render(){
     var navigator = this.props.navigator;
     var data = this.props.data;
     var entriesViewData = data.map(
@@ -25,6 +23,6 @@ var Entries = React.createClass({
       </ScrollView>
     );
   }
-})
+}
 
-module.exports = Entries;
+export default Entries;

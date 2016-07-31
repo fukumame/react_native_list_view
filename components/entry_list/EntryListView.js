@@ -1,21 +1,28 @@
-'use strict';
-var React = require('react');
-var ReactNative = require('react-native');
-var EntryDetail = require('./EntryDetail.js');
-var Entry = require('./Entry.js');
-var Entries = require('./Entries.js')
-var globalStyles = require('qiita-global-styles');
-var {
+import React, { Component } from 'react';
+import ReactNative from 'react-native';
+import EntryDetail from './EntryDetail.js';
+import Entry from './Entry.js';
+import Entries from './Entries.js';
+import globalStyles from 'qiita-global-styles';
+import {
   Text,
   View,
   ActivityIndicator
-} = ReactNative;
+} from 'react-native';
 
 var QIITA_REACTJS_ENTRY_URL = "https://qiita.com/api/v2/tags/reactjs/items";
 
-var EntryListView = React.createClass({
+class EntryListView extends Component {
 
-  _fetchData: function() {
+  constructor() {
+    super();
+    this.state = {
+      dataSource: [],
+      isLoaded: false
+    };
+  }
+
+  _fetchData() {
     fetch(QIITA_REACTJS_ENTRY_URL)
     .then((response) => response.json())
     .then((responseData) => {
@@ -26,19 +33,13 @@ var EntryListView = React.createClass({
       });
     })
     .done();
-  },
-  getInitialState: function() {
-    return(
-      {
-        dataSource: [],
-        isLoaded: false
-      }
-    );
-  },
-  componentDidMount: function(){
+  }
+
+  componentDidMount(){
     this._fetchData();
-  },
-  _viewLoadingData: function(){
+  }
+
+  _viewLoadingData(){
     return (
       <View style={globalStyles.activityIndicator}>
         <ActivityIndicator />
@@ -47,8 +48,9 @@ var EntryListView = React.createClass({
         </View>
       </View>
     )
-  },
-  render: function() {
+  }
+
+  render() {
     if(this.state.isLoaded){
       return(
         <Entries data={this.state.dataSource} navigator={this.props.navigator} />
@@ -59,6 +61,5 @@ var EntryListView = React.createClass({
       );
     }
   }
-});
-
-module.exports = EntryListView;
+}
+export default EntryListView;

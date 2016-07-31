@@ -7,10 +7,11 @@ import globalStyles from 'qiita-global-styles';
 import {
   Text,
   View,
-  ActivityIndicator
+  ActivityIndicator,
+  NavigatorIOS
 } from 'react-native';
 
-var QIITA_REACTJS_ENTRY_URL = "https://qiita.com/api/v2/tags/reactjs/items";
+var QIITA_REACTJS_ENTRY_URL = "https://qiita.com/api/v2/items";
 
 class EntryListView extends Component {
 
@@ -62,4 +63,7 @@ class EntryListView extends Component {
     }
   }
 }
+
+EntryListView.propTypes = { navigator: React.PropTypes.object.isRequired };
+
 export default EntryListView;
